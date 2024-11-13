@@ -2,6 +2,8 @@
 #include <iostream>
 #include "List.h"
 
+using namespace std;
+
 template <typename T>
 class ListArray : public List<T> {
 private:
@@ -15,6 +17,7 @@ private:
         for (int i = 0; i < n; ++i) {
             newArr[i] = arr[i];
         }
+
         delete[] arr;
         arr = newArr;
         max = new_size;
@@ -31,10 +34,10 @@ public:
         delete[] arr;
     }
 
-    // Insertar un elemento en una posición
+    // Inserta un elemento en una posición
     void insert(int pos, T e) override {
         if (pos < 0 || pos > n) {  // Debe ser pos <= n, no max
-            throw std::out_of_range("Posición fuera de rango");
+            throw out_of_range("Posición fuera de rango");
         }
 
         if (n >= max) {
@@ -49,20 +52,20 @@ public:
         n++;
     }
 
-    // Añadir al final
+    // Añade al final
     void append(T e) override {
         insert(n, e);
     }
 
-    // Añadir al principio
+    // Añade al principio
     void prepend(T e) override {
         insert(0, e);
     }
 
-    // Eliminar un elemento
+    // Elimina un elemento
     T remove(int pos) override {
         if (pos < 0 || pos >= n) {  // Cambié max por n
-            throw std::out_of_range("Posición fuera de rango");
+            throw out_of_range("Posición fuera de rango");
         }
 
         T removedValue = arr[pos];
@@ -78,30 +81,32 @@ public:
         return removedValue;
     }
 
-    // Obtener un elemento
+    // Obtiene un elemento
     T get(int pos) override {
         if (pos < 0 || pos >= n) {
-            throw std::out_of_range("Posición fuera de rango");
+            throw out_of_range("Posición fuera de rango");
         }
+
         return arr[pos];
     }
 
-    // Buscar un elemento
+    // Busca un elemento
     int search(T e) override {
         for (int i = 0; i < n; ++i) {
             if (arr[i] == e) {
                 return i;  // Retornar la posición si se encuentra
             }
         }
+
         return -1;
     }
 
-    // Verificar si la lista está vacía
+    // Verifica si la list está vacía
     bool empty() override {
         return n == 0;
     }
 
-    // Retornar el tamaño de la lista
+    // Retorna el tamaño de la list
     int size() override {
         return n;
     }
@@ -109,13 +114,14 @@ public:
     // Sobrecarga del operador []
     T operator[](int pos) {
         if (pos < 0 || pos >= n) {
-            throw std::out_of_range("Posición fuera de rango");
+            throw out_of_range("Posición fuera de rango");
         }
+
         return arr[pos];
     }
 
     // Sobrecarga del operador <<
-    friend std::ostream& operator<<(std::ostream &out, const ListArray<T> &list) {
+    friend ostream& operator<<(ostream &out, const ListArray<T> &list) {
         out << "[";
         for (int i = 0; i < list.n; ++i) {
             out << list.arr[i];
@@ -123,8 +129,8 @@ public:
                 out << ", ";
             }
         }
+
         out << "]";
         return out;
     }
 };
-            
